@@ -1,1 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newborn & Maternity Photography — Ad Strategy Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a18; padding: 1rem; }
+.wrap { max-width: 860px; margin: 0 auto; }
+h1 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: #73726c; margin-bottom: 1.25rem; }
+.tabs { display: flex; gap: 6px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.tab { padding: 6px 16px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 0.5px solid #ccc; background: #fff; color: #73726c; transition: all .15s; }
+.tab.active { background: #1a1a18; color: #fff; border-color: transparent; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.section-title { font-size: 11px; font-weight: 600; color: #73726c; text-transform: uppercase; letter-spacing: 0.07em; margin: 1.5rem 0 0.7rem; }
+.cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 0.5rem; }
+.card { background: #fff; border-radius: 10px; padding: 0.85rem 1rem; border: 0.5px solid #e0dfd6; }
+.card-label { font-size: 11px; color: #73726c; margin-bottom: 4px; }
+.card-val { font-size: 20px; font-weight: 600; color: #1a1a18; }
+.card-sub { font-size: 11px; color: #9c9a92; margin-top: 2px; line-height: 1.4; }
+.card-warn { background: #fdf3e3; border-color: #f5c46e; }
+.card-good { background: #eaf4ea; border-color: #7ec87e; }
+.card-info { background: #e8f1fb; border-color: #85b3e8; }
+.badge { display:inline-block; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600; }
+.badge-good { background:#eaf4ea; color:#2d7a2d; }
+.badge-warn { background:#fdf3e3; color:#a06000; }
+.badge-bad  { background:#fdeaea; color:#a02020; }
+.badge-info { background:#e8f1fb; color:#1a5fa0; }
+.badge-off  { background:#f1efe8; color:#73726c; border:0.5px solid #ccc; }
+.rec { background: #fff; border: 0.5px solid #e0dfd6; border-radius: 12px; padding: 0.9rem 1.1rem; margin-bottom: 10px; }
+.rec-title { font-size: 13px; font-weight: 600; color: #1a1a18; margin-bottom: 5px; }
+.rec-body { font-size: 13px; color: #73726c; line-height: 1.65; }
+.blueprint { border: 1.5px solid #85b3e8; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 12px; background: #e8f1fb; }
+.blueprint-title { font-size: 13px; font-weight: 600; color: #1a5fa0; margin-bottom: 8px; }
+.blueprint-row { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 0.5px solid #c5d8f0; padding: 5px 0; font-size: 12px; gap: 12px; }
+.blueprint-row:last-child { border-bottom: none; padding-bottom: 0; }
+.blueprint-key { color: #4a6a8a; white-space: nowrap; flex-shrink: 0; }
+.blueprint-val { color: #1a1a18; font-weight: 500; text-align: right; }
+.warn-box { border: 0.5px solid #f5c46e; border-radius: 8px; padding: 0.75rem 1rem; background: #fdf3e3; margin-bottom: 12px; font-size: 13px; color: #7a4800; line-height: 1.6; }
+.success-box { border: 0.5px solid #7ec87e; border-radius: 8px; padding: 0.75rem 1rem; background: #eaf4ea; margin-bottom: 12px; font-size: 13px; color: #1e5c1e; line-height: 1.6; }
+.info-box { border: 0.5px solid #85b3e8; border-radius: 8px; padding: 0.75rem 1rem; background: #e8f1fb; margin-bottom: 12px; font-size: 13px; color: #1a5fa0; line-height: 1.6; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; color: #73726c; font-weight: 600; font-size: 11px; padding: 6px 8px; border-bottom: 0.5px solid #e0dfd6; white-space: nowrap; }
+td { padding: 6px 8px; border-bottom: 0.5px solid #e0dfd6; color: #1a1a18; vertical-align: top; line-height: 1.5; }
+tr:last-child td { border-bottom: none; }
+.best-row td { background: rgba(46,160,67,0.06); }
+.dead-row td { background: rgba(200,50,50,0.05); }
+.step { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: #1a1a18; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+.step-body { flex: 1; }
+.step-title { font-size: 13px; font-weight: 600; color: #1a1a18; margin-bottom: 3px; }
+.step-desc { font-size: 12px; color: #73726c; line-height: 1.6; }
+.chart-wrap { position: relative; width: 100%; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Newborn & Maternity Photography — Ad Strategy</h1>
+<p class="subtitle">Mississauga studio · GTA market · WhatsApp sales model · $120K revenue analysis</p>
 
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('situation')">Your situation</div>
+  <div class="tab" onclick="switchTab('campaign')">Campaign blueprint</div>
+  <div class="tab" onclick="switchTab('creative')">Creative strategy</div>
+  <div class="tab" onclick="switchTab('whatsapp')">WhatsApp funnel</div>
+  <div class="tab" onclick="switchTab('roas')">ROAS roadmap</div>
+</div>
+
+<!-- TAB 1 -->
+<div id="tab-situation" class="tab-content active">
+  <div class="section-title">Your business snapshot</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">Business</div><div class="card-val" style="font-size:14px">Newborn &amp; Maternity Photography</div><div class="card-sub">Studio in Mississauga, ON</div></div>
+    <div class="card"><div class="card-label">Market radius</div><div class="card-val" style="font-size:14px">GTA-wide</div><div class="card-sub">Mississauga, Toronto, Brampton, Oakville, Hamilton, Markham</div></div>
+    <div class="card card-good"><div class="card-label">Revenue generated</div><div class="card-val">$120K</div><div class="card-sub">CAD on ~$20K spend = 6× ROAS</div></div>
+    <div class="card card-warn"><div class="card-label">WhatsApp close rate</div><div class="card-val">&lt;30%</div><div class="card-sub">⚠️ Biggest growth lever</div></div>
+  </div>
+
+  <div class="section-title">What's working</div>
+  <div class="success-box">
+    ✓ <strong>6× ROAS is strong</strong> for a local service business on manual WhatsApp closes — most photographers run at 2–3×.<br><br>
+    ✓ <strong>Strong organic portfolio</strong> on Instagram/Facebook means people who see your ads and check your profile get convinced.<br><br>
+    ✓ <strong>Static collage image</strong> at fresh frequency ($3.19/result) — you've already found your best creative format.<br><br>
+    ✓ <strong>Wide GTA geography</strong> gives you a massive addressable market of ~7M people.
+  </div>
+
+  <div class="section-title">Three critical problems</div>
+  <div class="rec">
+    <div class="rec-title">Problem 1 — Under 30% close rate is your biggest revenue leak</div>
+    <div class="rec-body">You generated 3,121 conversations. At &lt;30% close, you booked ~900 sessions. At $250 avg = ~$225K potential revenue. You captured $120K — meaning ~$105K walked away in unconverted WhatsApp chats. <strong>Fixing your close rate is worth more than doubling your ad budget.</strong> At 50% close with the same leads, you'd generate $195K — a $75K increase with zero extra spend.</div>
+  </div>
+  <div class="rec">
+    <div class="rec-title">Problem 2 — Frequency 7.79 means your audience is exhausted</div>
+    <div class="rec-body">For a local Mississauga/GTA studio, your addressable audience of pregnant women and new mothers is naturally limited (~80,000–120,000 people at any time). Showing the same ad 7–8 times explains your rising CPR. You need fresh creatives rotating every 3 weeks and audience expansion to surrounding cities.</div>
+  </div>
+  <div class="rec">
+    <div class="rec-title">Problem 3 — Sub-$300 pricing limits your ROAS ceiling</div>
+    <div class="rec-body">At $250 average package, a 40% price increase to $350 takes your ROAS from 6× to 8.4× instantly — with zero extra ad spend. Premium pricing also attracts more committed clients, reducing low-intent leads in your DMs.</div>
+  </div>
+
+  <div class="section-title">ROAS sensitivity — what moves the needle most</div>
+  <div class="chart-wrap" style="height:210px"><canvas id="chartSensitivity"></canvas></div>
+</div>
+
+<!-- TAB 2 -->
+<div id="tab-campaign" class="tab-content">
+  <div class="info-box">
+    <strong>Objective recommendation: Click-to-WhatsApp (Leads objective)</strong><br>
+    Since you close 100% through WhatsApp manually, Click-to-WhatsApp is purpose-built for you. People tap the ad → WhatsApp opens instantly → you're already in conversation. No form, no redirect, no friction.
+  </div>
+
+  <div class="blueprint">
+    <div class="blueprint-title">Campaign layer</div>
+    <div class="blueprint-row"><span class="blueprint-key">Objective</span><span class="blueprint-val">Leads → Click to WhatsApp</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Budget type</span><span class="blueprint-val">CBO — Campaign Budget Optimization</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Daily budget</span><span class="blueprint-val">$35–40/day to start ($64+ for 20 leads/day)</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Attribution</span><span class="blueprint-val">7-day click / 1-day view</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Buying type</span><span class="blueprint-val">Auction</span></div>
+  </div>
+
+  <div class="blueprint">
+    <div class="blueprint-title">Ad set 1 — Lookalike audience (highest priority)</div>
+    <div class="blueprint-row"><span class="blueprint-key">Audience source</span><span class="blueprint-val">Upload past client list → 1–2% Lookalike</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Location</span><span class="blueprint-val">Mississauga + 25km radius (covers all GTA)</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Age</span><span class="blueprint-val">24–38 women</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Placements</span><span class="blueprint-val">Facebook Feed, Instagram Feed, Instagram Reels, Facebook Reels</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Budget share</span><span class="blueprint-val">~50% of CBO budget</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Why</span><span class="blueprint-val">Lookalikes had $3.30 CPR vs $4.63 for interests — 29% cheaper, proven by your data</span></div>
+  </div>
+
+  <div class="blueprint">
+    <div class="blueprint-title">Ad set 2 — Warm retargeting (fastest converters)</div>
+    <div class="blueprint-row"><span class="blueprint-key">Audience</span><span class="blueprint-val">Website visitors (90 days) + IG profile visitors + video viewers 50%+</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Exclude</span><span class="blueprint-val">Past clients (your custom audience)</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Placements</span><span class="blueprint-val">Facebook Feed + Instagram Feed only</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Budget share</span><span class="blueprint-val">~30% of CBO budget</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Ad angle</span><span class="blueprint-val">"You visited us — here's what a session looks like" → portfolio carousel</span></div>
+  </div>
+
+  <div class="blueprint">
+    <div class="blueprint-title">Ad set 3 — Cold interest targeting (new discovery)</div>
+    <div class="blueprint-row"><span class="blueprint-key">Interests</span><span class="blueprint-val">Pregnancy, newborn care, baby products, maternity, new parents</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Life events</span><span class="blueprint-val">Expecting a baby, new parent (Meta life event targeting)</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Location</span><span class="blueprint-val">Mississauga + 25km — include Hamilton and Markham explicitly</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Age / gender</span><span class="blueprint-val">24–38, all genders (include fathers — they book as gifts)</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Budget share</span><span class="blueprint-val">~20% of CBO budget</span></div>
+  </div>
+
+  <div class="section-title">Budget reality vs your $20/day goal</div>
+  <div class="chart-wrap" style="height:190px"><canvas id="chartBudget"></canvas></div>
+  <div class="warn-box" style="margin-top:12px">
+    ⚠️ At $20/day you'll get 4–6 WhatsApp leads/day. To hit 20/day you need $64–90/day. However — 6 leads/day on $20 spend at 30% close and $250 package = <strong>$450/day revenue = 22.5× daily ROAS.</strong> The $20 budget works — just set realistic lead volume expectations.
+  </div>
+</div>
+
+<!-- TAB 3 -->
+<div id="tab-creative" class="tab-content">
+  <div class="section-title">What your data says about each format</div>
+  <table>
+    <thead><tr><th>Format</th><th>Best CPR</th><th>Best CTR</th><th>Verdict</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr class="best-row"><td>Static collage image</td><td style="color:#2d7a2d;font-weight:600">$3.19</td><td style="color:#2d7a2d;font-weight:600">1.87%</td><td><span class="badge badge-good">Your #1 format</span></td><td>Rotate new versions every 3 weeks</td></tr>
+      <tr class="best-row"><td>Carousel (Christmas)</td><td style="color:#2d7a2d;font-weight:600">$3.88</td><td style="color:#2d7a2d;font-weight:600">2.35%</td><td><span class="badge badge-good">Best CTR ever</span></td><td>Relaunch as evergreen now</td></tr>
+      <tr><td>Video v2</td><td>$3.96</td><td>0.87%</td><td><span class="badge badge-info">Promising</span></td><td>Test with stronger 3-sec hook</td></tr>
+      <tr class="dead-row"><td>Carousel — 1 original</td><td style="color:#a02020;font-weight:600">$7.85</td><td style="color:#a02020;font-weight:600">0.68%</td><td><span class="badge badge-bad">Dead</span></td><td>Never run again</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">3-creative rotation plan</div>
+  <div class="rec">
+    <div class="rec-title">Run 3 ads per ad set — swap the weakest every 3 weeks</div>
+    <div class="rec-body">
+      <strong>Creative A — Static Collage (always on):</strong> Your proven winner. Keep one version always active. Rotate a new angle every 3 weeks: before/after poses, behind-the-scenes setup, parent reaction moments, seasonal themes.<br><br>
+      <strong>Creative B — Evergreen Carousel:</strong> Take the Christmas carousel (your 2.35% CTR winner), strip seasonal elements, rebuild as an evergreen portfolio carousel with 5–6 slides of your best shots.<br><br>
+      <strong>Creative C — Video (test):</strong> 15-second reel. First 3 seconds = beautiful newborn photo + text "Mississauga families trust us with their first moments." Middle = 5-second montage. End = "Message us to check availability." No voiceover needed.
+    </div>
+  </div>
+
+  <div class="section-title">3 ad copy angles for your studio</div>
+  <div class="blueprint">
+    <div class="blueprint-title">Angle 1 — Urgency / time window (newborn)</div>
+    <div class="blueprint-row"><span class="blueprint-key">Headline</span><span class="blueprint-val">"Newborns are only this tiny for 2 weeks."</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Body</span><span class="blueprint-val">"We capture those first precious days before they're gone. Limited sessions this month in Mississauga. Message us to check your date."</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Why it works</span><span class="blueprint-val">Real scarcity — the 5–14 day newborn window is genuine, not fake urgency</span></div>
+  </div>
+  <div class="blueprint">
+    <div class="blueprint-title">Angle 2 — Gift targeting (for fathers)</div>
+    <div class="blueprint-row"><span class="blueprint-key">Headline</span><span class="blueprint-val">"The gift she'll cry over (in the best way)."</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Body</span><span class="blueprint-val">"Surprise her with a professional newborn or maternity session. We handle everything. Gift sessions available — message us."</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Target</span><span class="blueprint-val">Men 25–40 in GTA — untapped segment with zero competition from other photographers</span></div>
+  </div>
+  <div class="blueprint">
+    <div class="blueprint-title">Angle 3 — Social proof (for retargeting)</div>
+    <div class="blueprint-row"><span class="blueprint-key">Headline</span><span class="blueprint-val">"500+ Mississauga families. Memories that last forever."</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Body</span><span class="blueprint-val">"See why GTA parents choose us. Packages from $[X]. Limited spots — message us to book yours."</span></div>
+    <div class="blueprint-row"><span class="blueprint-key">Target</span><span class="blueprint-val">Warm retargeting only — people who already know you need proof + a clear next step, not discovery</span></div>
+  </div>
+</div>
+
+<!-- TAB 4 -->
+<div id="tab-whatsapp" class="tab-content">
+  <div class="warn-box">
+    ⚠️ <strong>Your close rate (&lt;30%) is your single biggest revenue leak.</strong> You're losing 70%+ of leads after the ad does its job. No ad optimization fixes this — it happens in the conversation. Fixing WhatsApp from 30% → 50% close rate is worth more than tripling your ad budget.
+  </div>
+
+  <div class="section-title">Why leads go cold — and the fix</div>
+  <table>
+    <thead><tr><th>Issue</th><th>What's happening</th><th>Fix</th></tr></thead>
+    <tbody>
+      <tr><td>Slow response</td><td>Lead messages at 9pm, you reply next morning — they've moved on</td><td>WhatsApp Business auto-reply within 60 seconds</td></tr>
+      <tr><td>No pricing upfront</td><td>Long back-and-forth before they see the price, then disappear</td><td>Send packages PDF/image in first reply</td></tr>
+      <tr><td>No urgency</td><td>"I'll think about it" — never comes back</td><td>"We only take 8 sessions/month — let me check your date"</td></tr>
+      <tr><td>No follow-up</td><td>Lead goes quiet — never followed up</td><td>Follow up at 24h, 72h, and 7 days with different angles</td></tr>
+      <tr><td>Weak opener</td><td>Generic "Hi, tell me more" kills momentum</td><td>Pre-filled WhatsApp message in the ad: "Hi! I'm interested in booking a newborn session 👶"</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">5-step WhatsApp sales script</div>
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <div class="step-title">Instant auto-reply (set in WhatsApp Business)</div>
+      <div class="step-desc">"Hi [Name]! 👶 Thanks for reaching out. I'm [Your Name], Mississauga's newborn &amp; maternity photographer. Can I ask — are you expecting, or has baby arrived? This helps me find the perfect session for you 🌸"</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <div class="step-title">Qualify &amp; send packages in your first manual reply</div>
+      <div class="step-desc">"Congratulations! 🎉 Our [Newborn/Maternity] session would be perfect. Here are our packages [send image]. Our most popular is the [X] package at $[price] — includes [key inclusions]. What date range are you thinking?"</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <div class="step-title">Create urgency with real scarcity</div>
+      <div class="step-desc">"We only take 8 sessions per month to give every family our full attention. Let me check [their month]... I have [date 1] and [date 2] open — which works better for you?"</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <div class="step-title">Handle price objections with social proof</div>
+      <div class="step-desc">"I completely understand — here's what some of our recent families said [send 2–3 screenshot reviews]. Many tell us it's the best money they spent after having their baby. These photos are truly once in a lifetime 💛"</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <div class="step-title">Close with a deposit</div>
+      <div class="step-desc">"To lock in your date, we just need a $[50–100] deposit — the rest is due on the day. Shall I send you the booking details? 😊"</div>
+    </div>
+  </div>
+
+  <div class="section-title">Follow-up sequence for cold leads</div>
+  <table>
+    <thead><tr><th>Timing</th><th>Angle</th><th>Message</th></tr></thead>
+    <tbody>
+      <tr><td style="white-space:nowrap;font-weight:600">24 hours</td><td>Soft check-in</td><td>"Hi [Name]! Just checking if you had any questions about our packages — happy to help 😊"</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">72 hours</td><td>Portfolio share</td><td>"I wanted to share a recent session that might give you an idea of what to expect 📸 [send best photo]. Would love to do the same for your family!"</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">7 days</td><td>Scarcity + last touch</td><td>"Hi [Name]! We have one spot left in [month] — wanted to let you know before it fills up. No pressure at all 💛"</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-title">Revenue impact of improving your close rate (same ad spend)</div>
+  <div class="chart-wrap" style="height:200px"><canvas id="chartClose"></canvas></div>
+</div>
+
+<!-- TAB 5 -->
+<div id="tab-roas" class="tab-content">
+  <div class="section-title">Current performance</div>
+  <div class="cards">
+    <div class="card"><div class="card-label">Ad spend</div><div class="card-val">~$20K</div><div class="card-sub">CAD total</div></div>
+    <div class="card"><div class="card-label">Revenue</div><div class="card-val">$120K</div><div class="card-sub">CAD total</div></div>
+    <div class="card card-good"><div class="card-label">Current ROAS</div><div class="card-val">6.0×</div><div class="card-sub">Strong for local service</div></div>
+    <div class="card card-info"><div class="card-label">Target ROAS</div><div class="card-val">12–15×</div><div class="card-sub">Achievable in 3–6 months</div></div>
+  </div>
+
+  <div class="section-title">Three levers to double your ROAS — ranked by impact</div>
+  <div class="rec">
+    <div class="rec-title">Lever 1 — Fix WhatsApp close rate: 30% → 50% (highest impact, zero extra spend)</div>
+    <div class="rec-body">3,121 leads × 30% × $250 = <strong>$234K (current)</strong>. Same leads × 50% × $250 = <strong>$390K</strong>. That's a $156K increase with zero extra ad spend. ROAS jumps from 6× to 10×.</div>
+  </div>
+  <div class="rec">
+    <div class="rec-title">Lever 2 — Introduce a premium package at $450–600</div>
+    <div class="rec-body">Even 20% of clients upgrading from $250 to $500 shifts your average order value meaningfully. List the premium package first in your WhatsApp pitch, then offer the base as the "more accessible option." ROAS scales with order value, not ad spend.</div>
+  </div>
+  <div class="rec">
+    <div class="rec-title">Lever 3 — Reduce CPR from $4.50 → $3.00 through smarter targeting</div>
+    <div class="rec-body">Shift budget to Lookalike audiences (proven $3.30 CPR), rotate creatives before frequency exceeds 3, switch to Click-to-WhatsApp objective, and add retargeting. A 33% CPR reduction means 33% more leads on the same budget.</div>
+  </div>
+
+  <div class="section-title">ROAS projection — all three levers combined</div>
+  <div class="chart-wrap" style="height:220px"><canvas id="chartROASProj"></canvas></div>
+
+  <div class="section-title">90-day action priority</div>
+  <table>
+    <thead><tr><th>When</th><th>Action</th><th>Expected impact</th></tr></thead>
+    <tbody>
+      <tr><td style="white-space:nowrap;font-weight:600">Week 1</td><td>Set up WhatsApp Business auto-reply + 5-step sales script</td><td>Close rate +10–15%</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Week 1</td><td>Relaunch Christmas Carousel 1 as evergreen creative</td><td>CTR back to 2.35%</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Week 2</td><td>Upload past client list → create Lookalike audience</td><td>CPR drops to ~$3.30</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Week 2</td><td>Launch Click-to-WhatsApp campaign alongside current one</td><td>Higher intent leads</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Week 3</td><td>Add retargeting ad set for website + IG visitors</td><td>Cheapest leads in account</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Week 4</td><td>Introduce premium $450–600 package in WhatsApp pitch</td><td>AOV +30–40%</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Month 2</td><td>Add father-targeting ad set with gift angle creative</td><td>New untapped segment</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Month 2</td><td>Set up 3-touch follow-up for cold leads</td><td>Recover 15–20% of cold leads</td></tr>
+      <tr><td style="white-space:nowrap;font-weight:600">Month 3</td><td>Review data — double down on best ad set</td><td>ROAS 10–12× by month 3</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+const textColor = '#3d3d3a';
+const gridColor = 'rgba(0,0,0,0.06)';
+
+new Chart(document.getElementById('chartSensitivity'), {
+  type: 'bar',
+  data: {
+    labels: ['Current (6×)', 'Fix close rate →50%', 'Add premium package', 'Lower CPR →$3.00', 'All three combined'],
+    datasets: [{ data: [6, 10, 8.4, 9, 18], backgroundColor: ['#378ADD','#1D9E75','#1D9E75','#1D9E75','#534AB7'], borderRadius: 4 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, title:{display:true,text:'ROAS by improvement lever',color:textColor,font:{size:12}} }, scales:{ x:{ticks:{color:textColor,font:{size:10}}}, y:{ticks:{color:textColor,font:{size:10},callback:v=>v+'×'},grid:{color:gridColor},beginAtZero:true} } }
+});
+
+new Chart(document.getElementById('chartBudget'), {
+  type: 'bar',
+  data: {
+    labels: ['$20/day', '$35/day', '$64/day', '$90/day'],
+    datasets: [
+      { label: 'Optimistic leads/day', data: [6, 11, 20, 28], backgroundColor: '#1D9E75', borderRadius: 4 },
+      { label: 'Conservative leads/day', data: [4, 7, 14, 20], backgroundColor: '#378ADD', borderRadius: 4 }
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:true,labels:{color:textColor,font:{size:11},boxWidth:10}}, title:{display:true,text:'Expected leads/day by budget',color:textColor,font:{size:12}} }, scales:{ x:{ticks:{color:textColor,font:{size:11}}}, y:{ticks:{color:textColor,font:{size:10}},grid:{color:gridColor}} } }
+});
+
+new Chart(document.getElementById('chartClose'), {
+  type: 'bar',
+  data: {
+    labels: ['30% close (current)', '40% close', '50% close', '60% close'],
+    datasets: [{ data: [120000, 160000, 200000, 240000], backgroundColor: ['#378ADD','#EF9F27','#1D9E75','#534AB7'], borderRadius: 4 }]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, title:{display:true,text:'Annual revenue by close rate (same ad spend)',color:textColor,font:{size:12}} }, scales:{ x:{ticks:{color:textColor,font:{size:10}}}, y:{ticks:{color:textColor,font:{size:10},callback:v=>'$'+v.toLocaleString()},grid:{color:gridColor}} } }
+});
+
+new Chart(document.getElementById('chartROASProj'), {
+  type: 'line',
+  data: {
+    labels: ['Now', 'Month 1', 'Month 2', 'Month 3', 'Month 6'],
+    datasets: [
+      { label: 'Conservative', data: [6, 7.5, 9, 10, 12], borderColor: '#378ADD', backgroundColor: 'rgba(55,138,221,0.1)', tension: 0.4, fill: true, pointRadius: 4 },
+      { label: 'Optimistic', data: [6, 9, 12, 15, 18], borderColor: '#1D9E75', backgroundColor: 'rgba(29,158,117,0.08)', tension: 0.4, fill: true, pointRadius: 4 }
+    ]
+  },
+  options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:true,labels:{color:textColor,font:{size:11},boxWidth:10}} }, scales:{ x:{ticks:{color:textColor,font:{size:11}}}, y:{ticks:{color:textColor,font:{size:10},callback:v=>v+'×'},grid:{color:gridColor},beginAtZero:true} } }
+});
+</script>
+</div>
+</body>
+</html>
